@@ -1,24 +1,5 @@
-# t
+# Lista de Filmes desenvolvida com o framework Vue.js
 
-## Project setup
-```
-yarn install
-```
+##Criado por Arthur Bowen e Gabriel Moreira
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Trabalho de Conclusão de Curso
