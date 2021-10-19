@@ -1,14 +1,12 @@
 <template>
   <div class="column">
     <div class="botoes">
-      <a class="edit" v-on:click="this.mostrarCadastro(this.Filme, 'Alterar')">
-        &#9998;
-      </a>
+      <a class="edit" v-on:click="this.mostrarCadastro()"> &#9998; </a>
       <a class="delete" v-on:click="this.deleteFilme(this.Filme._id)">
         &#128465;
       </a>
     </div>
-    <div class="card" v-on:click="this.mostrarDetalhes(this.Filme)">
+    <div class="card" v-on:click="this.mostrarDetalhes()">
       <img alt="" :src="Filme.foto" />
       <p>{{ Filme.nome }}</p>
     </div>
@@ -42,11 +40,11 @@ export default {
     Detalhes: Detalhes,
   },
   methods: {
-    mostrarCadastro(filme, tipo) {
+    mostrarCadastro() {
       this.open1 = true;
       this.open = false;
     },
-    mostrarDetalhes(filme) {
+    mostrarDetalhes() {
       this.open1 = false;
       this.open = true;
     },

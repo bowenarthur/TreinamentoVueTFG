@@ -9,7 +9,7 @@
   </div>
   <div class="Modal" v-if="open1">
     <a class="close" v-on:click="this.closeModal1()"> &times; </a>
-    <Formulario Filme="" Tipo="Cadastro" />
+    <Formulario Tipo="Cadastro" />
   </div>
 </template>
 
@@ -23,12 +23,11 @@ export default {
     Formulario: Formulario,
   },
   methods: {
-    mostrarCadastro(filme, tipo) {
+    mostrarCadastro() {
       this.open1 = true;
     },
     closeModal1() {
       this.open1 = false;
-      this.filme = {};
     },
   },
 };

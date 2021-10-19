@@ -2,7 +2,7 @@
   <h4>{{ Filme.nome }}</h4>
   <p>Sinopse: {{ Filme.sinopse }}</p>
   <p>Categoria: {{ Filme.categoria }}</p>
-  <p>Duração: {{ Filme.tempo }}</p>
+  <p>Duração: {{ Filme.duracao }}</p>
   <p>Ano: {{ Filme.ano }}</p>
   <p>Personagens:</p>
   <table class="Tabela">

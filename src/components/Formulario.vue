@@ -28,8 +28,8 @@
         <label for="ano">Ano: </label>
         <input type="number" name="ano" v-model="ano" required />
         <br />
-        <label for="tempo">Duração: </label>
-        <input type="text" name="tempo" v-model="tempo" required />
+        <label for="duracao">Duração(minutos): </label>
+        <input type="number" name="duracao" v-model="duracao" required />
         <br />
       </div>
       <div>
@@ -76,7 +76,7 @@ export default {
     categoria: "",
     sinopse: "",
     ano: "",
-    tempo: "",
+    duracao: "",
   }),
   props: {
     Tipo: String,
@@ -90,7 +90,7 @@ export default {
         categoria: this.categoria,
         sinopse: this.sinopse,
         ano: this.ano,
-        tempo: this.tempo,
+        duracao: this.duracao,
         personagens: this.personagens,
       };
       if (this.Tipo === "Alterar") {
@@ -160,7 +160,7 @@ export default {
       this.categoria = this.Filme.categoria;
       this.sinopse = this.Filme.sinopse;
       this.ano = this.Filme.ano;
-      this.tempo = this.Filme.tempo;
+      this.duracao = this.Filme.duracao;
       this.personagens = this.Filme.personagens;
     }
   },
