@@ -1,6 +1,6 @@
 <template>
   <div class="App">
-    <Header />
+    <Header v-on:mostrar-form="mostrarForm" />
     <ListaFilmes 
         Titulo="Últimos filmes" 
         :filmes="filmes" 
