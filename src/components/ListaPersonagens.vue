@@ -1,5 +1,5 @@
 <template>
-    <table class="Tabela" v-if="personagens.length > 0">
+    <table class="Tabela" v-if="personagens && personagens.length > 0">
     <thead>
       <tr>
         <th>Personagem</th>

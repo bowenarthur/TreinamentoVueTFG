@@ -1,5 +1,5 @@
 <template>
-  <form v-on:submit.prevent="this.submit()">
+  <form v-on:submit.prevent="submit">
     <h2>Cadastro de Filme</h2>
     <div class="Formulario">
       <div>
@@ -11,15 +11,9 @@
         <br />
         <label for="categoria">Categoria: </label>
         <select name="categoria" v-model="categoria" required>
-          <option disabled value=""></option>
-          <option value="Ação">Ação</option>
-          <option value="Comédia">Comédia</option>
-          <option value="Documentário">Documentário</option>
-          <option value="Drama">Drama</option>
-          <option value="Fantasia">Fantasia</option>
-          <option value="Ficção">Ficção</option>
-          <option value="Romance">Romance</option>
-          <option value="Terror">Terror</option>
+          <option v-for="categoria in categorias" :value="categoria" v-bind:key="categoria">
+            {{categoria}}
+          </option>
         </select>
         <br />
         <label for="sinopse">Sinopse: </label>
@@ -28,7 +22,7 @@
         <label for="ano">Ano: </label>
         <input type="number" name="ano" v-model="ano" required />
         <br />
-        <label for="duracao">Duração(minutos): </label>
+        <label for="duracao">Duração (min): </label>
         <input type="number" name="duracao" v-model="duracao" required />
         <br />
       </div>
@@ -42,14 +36,12 @@
 </template>
 
 <script>
-import axios from "axios";
+import { inserirFilme, atualizarFilme } from "../Servico"
 import EdicaoPersonagens from "./EdicaoPersonagens";
 
 export default {
   data: () => ({
     personagens: [],
-    nomepersonagem: "",
-    ator: "",
     nome: "",
     foto: "",
     categoria: "",
@@ -58,8 +50,12 @@ export default {
     duracao: "",
   }),
   props: {
-    Tipo: String,
-    Filme: Object,
+    filme: Object
+  },
+  computed: {
+    categorias: () => [
+        "Ação", "Comédia", "Documentário", "Drama", "Fantasia", "Ficção", "Romance", "Terror"
+    ]  
   },
   components: {
     EdicaoPersonagens
@@ -75,46 +71,25 @@ export default {
         duracao: this.duracao,
         personagens: this.personagens,
       };
-      if (this.Tipo === "Alterar") {
-        axios
-          .put(
-            "https://frameworks-web.herokuapp.com/api/filmes/" + this.Filme._id,
-            data
-          )
-          .then(() => {
-            alert("Filme alterado com sucesso!");
-            window.location.reload();
-          })
-          .catch((err) => {
-            alert("Ocorreu um erro");
-            console.log(err);
-          });
-      } else if (this.Tipo === "Cadastro") {
-        axios
-          .post("https://frameworks-web.herokuapp.com/api/filmes", data)
-          .then(() => {
-            alert("Filme cadastrado com sucesso!");
-            window.location.reload();
-          })
-          .catch((err) => {
-            alert("Ocorreu um erro");
-            console.log(err);
-          });
-      } else console.log("Tipo incorreto");
+      this.filme._id ?
+        atualizarFilme(this.filme._id, data) :
+        inserirFilme(data);
     },
     atualizarPersonagens(personagens) {
         this.personagens = personagens
     }
   },
   mounted() {
-    if (this.Filme) {
-      this.nome = this.Filme.nome;
-      this.foto = this.Filme.foto;
-      this.categoria = this.Filme.categoria;
-      this.sinopse = this.Filme.sinopse;
-      this.ano = this.Filme.ano;
-      this.duracao = this.Filme.duracao;
-      this.personagens = this.Filme.personagens;
+    if (this.filme._id) {
+      this.nome = this.filme.nome;
+      this.foto = this.filme.foto;
+      this.categoria = this.filme.categoria;
+      this.sinopse = this.filme.sinopse;
+      this.ano = this.filme.ano;
+      this.duracao = this.filme.duracao;
+      this.personagens = this.filme.personagens;
+    } else {
+      this.categoria = this.categorias[0]  
     }
   },
 };

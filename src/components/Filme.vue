@@ -1,8 +1,8 @@
 <template>
   <div class="column">
     <div class="botoes">
-      <a class="edit" v-on:click="mostrarForm"> &#9998; </a>
-      <a class="delete" v-on:click="deleteFilme">
+      <a class="edit" v-on:click.prevent="mostrarForm"> &#9998; </a>
+      <a class="delete" v-on:click.prevent="deleteFilme">
         &#128465;
       </a>
     </div>

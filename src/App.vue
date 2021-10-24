@@ -9,13 +9,13 @@
     />
 
     <div class="Modal" v-if="openDetalhes">
-        <a class="close" v-on:click="fecharDetalhes"> &times; </a>
+        <a class="close" v-on:click.prevent="fecharDetalhes"> &times; </a>
         <Detalhes :filme="filme" />
     </div>
 
     <div class="Modal" v-if="openForm">
-        <a class="close" v-on:click="fecharForm"> &times; </a>
-        <Formulario :Filme="filme" Tipo="Alterar" />
+        <a class="close" v-on:click.prevent="fecharForm"> &times; </a>
+        <Formulario :filme="filme" />
     </div>
   </div>
 </template>
