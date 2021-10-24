@@ -1,14 +1,14 @@
 <template>
   <div class="column">
     <div class="botoes">
-      <a class="edit" v-on:click="mostrarForm(Filme)"> &#9998; </a>
-      <a class="delete" v-on:click="this.deleteFilme(this.Filme._id)">
+      <a class="edit" v-on:click="mostrarForm"> &#9998; </a>
+      <a class="delete" v-on:click="deleteFilme">
         &#128465;
       </a>
     </div>
-    <div class="card" v-on:click="mostrarDetalhes(Filme)">
-      <img alt="" :src="Filme.foto" />
-      <p>{{ Filme.nome }}</p>
+    <div class="card" v-on:click="mostrarDetalhes">
+      <img alt="" :src="filme.foto" />
+      <p>{{ filme.nome }}</p>
     </div>
   </div>
 </template>
@@ -18,17 +18,17 @@ import { excluirFilme } from '../Servico';
 
 export default {
   props: {
-    Filme: Object,
+    filme: Object,
   },
   methods: {
-    mostrarForm(filme) {
-      this.$emit('mostrar-form', filme);
+    mostrarForm() {
+      this.$emit('mostrar-form', this.filme);
     },
-    mostrarDetalhes(filme) {
-      this.$emit('mostrar-detalhes', filme);
+    mostrarDetalhes() {
+      this.$emit('mostrar-detalhes', this.filme);
     },
-    deleteFilme(id) {
-      excluirFilme(id);
+    deleteFilme() {
+      excluirFilme(this.filme._id);
     },
   },
 };

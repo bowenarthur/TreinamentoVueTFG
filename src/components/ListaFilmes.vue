@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h3>{{ Titulo }}</h3>
+    <h3>{{ titulo }}</h3>
     <div class="scrollmenu row dragscroll">
-      <div v-for="filme in this.filmes" :key="filme._id">
+      <div v-for="filme in filmes" :key="filme._id">
         <Filme 
-            :Filme="filme" 
+            :filme="filme" 
             v-on:mostrar-detalhes="mostrarDetalhes" 
             v-on:mostrar-form="mostrarForm"
         />
@@ -17,7 +17,7 @@
 import Filme from "./Filme";
 export default {
   props: {
-    Titulo: String,
+    titulo: String,
     filmes: [Object]
   },
   components: {

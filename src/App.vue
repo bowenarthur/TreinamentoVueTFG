@@ -2,7 +2,7 @@
   <div class="App">
     <Header v-on:mostrar-form="mostrarForm" />
     <ListaFilmes 
-        Titulo="Últimos filmes" 
+        titulo="Últimos filmes" 
         :filmes="filmes" 
         v-on:mostrar-detalhes="mostrarDetalhes"
         v-on:mostrar-form="mostrarForm" 
@@ -10,7 +10,7 @@
 
     <div class="Modal" v-if="openDetalhes">
         <a class="close" v-on:click="fecharDetalhes"> &times; </a>
-        <Detalhes :Filme="filme" />
+        <Detalhes :filme="filme" />
     </div>
 
     <div class="Modal" v-if="openForm">
