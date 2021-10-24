@@ -65,6 +65,7 @@ export default {
       fecharForm() {
           this.filme = {}
           this.openForm = false
+          this.fetchData()
       }
   },
   mounted() {

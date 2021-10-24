@@ -7,7 +7,7 @@
       </tr>
     </thead>
     <tbody v-for="personagem in personagens" :key="personagem._id">
-      <tr>
+      <tr v-on:click="removerPersonagem(personagem.nome)">
         <td>{{ personagem.nome }}</td>
         <td>{{ personagem.ator }}</td>
       </tr>
@@ -19,6 +19,11 @@
     export default {
         props: {
             personagens: [Object]
+        },
+        methods: {
+            removerPersonagem(nome) {
+                this.$emit('remover-personagem', nome)
+            }
         }
     }
 </script>

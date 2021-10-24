@@ -32,33 +32,10 @@
         <input type="number" name="duracao" v-model="duracao" required />
         <br />
       </div>
-      <div>
-        <h3>Personagens</h3>
-        <br />
-        <label for="nomepersonagem">Nome: </label>
-        <input type="text" name="nomepersonagem" v-model="nomepersonagem" />
-        <br />
-        <label for="personagem">Ator/Atriz: </label>
-        <input type="text" name="ator" v-model="ator" />
-        <button type="button" v-on:click="this.adicionarPersonagem()">
-          Adicionar
-        </button>
-
-        <table class="Tabela">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Ator/Atriz</th>
-            </tr>
-          </thead>
-          <tbody v-for="personagem in personagens" :key="personagem._id">
-            <tr v-on:click="this.removerPersonagem(personagem.nome)">
-              <td>{{ personagem.nome }}</td>
-              <td>{{ personagem.ator }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <EdicaoPersonagens 
+        :personagens="personagens" 
+        v-on:atualizar-personagens="atualizarPersonagens" 
+      />
     </div>
     <input type="submit" class="BotaoCadastrar" value="Enviar" />
   </form>
@@ -66,6 +43,8 @@
 
 <script>
 import axios from "axios";
+import EdicaoPersonagens from "./EdicaoPersonagens";
+
 export default {
   data: () => ({
     personagens: [],
@@ -81,6 +60,9 @@ export default {
   props: {
     Tipo: String,
     Filme: Object,
+  },
+  components: {
+    EdicaoPersonagens
   },
   methods: {
     submit() {
@@ -120,38 +102,9 @@ export default {
           });
       } else console.log("Tipo incorreto");
     },
-    adicionarPersonagem() {
-      let aux = this.personagens;
-      if (aux) {
-        aux[aux.length] = {
-          nome: this.nomepersonagem,
-          ator: this.ator,
-        };
-      } else {
-        aux = [
-          {
-            nome: this.nomepersonagem,
-            ator: this.ator,
-          },
-        ];
-      }
-      this.personagens = aux;
-      this.nomepersonagem = "";
-      this.ator = "";
-    },
-    removerPersonagem(nome) {
-      let aux = this.personagens;
-      let indice;
-      aux.map(function (p, index) {
-        if (p.nome === nome) {
-          indice = index;
-        }
-      });
-      aux.splice(indice, 1);
-      this.personagens = aux;
-      this.nomepersonagem = "";
-      this.ator = "";
-    },
+    atualizarPersonagens(personagens) {
+        this.personagens = personagens
+    }
   },
   mounted() {
     if (this.Filme) {
