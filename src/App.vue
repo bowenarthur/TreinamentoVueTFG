@@ -1,10 +1,21 @@
 <template>
   <div class="App">
     <Header />
-    <ListaFilmes Titulo="Últimos filmes" :filmes="filmes" v-on:mostrar-detalhes="mostrarDetalhes" />
+    <ListaFilmes 
+        Titulo="Últimos filmes" 
+        :filmes="filmes" 
+        v-on:mostrar-detalhes="mostrarDetalhes"
+        v-on:mostrar-form="mostrarForm" 
+    />
+
     <div class="Modal" v-if="openDetalhes">
         <a class="close" v-on:click="fecharDetalhes"> &times; </a>
         <Detalhes :Filme="filme" />
+    </div>
+
+    <div class="Modal" v-if="openForm">
+        <a class="close" v-on:click="fecharForm"> &times; </a>
+        <Formulario :Filme="filme" Tipo="Alterar" />
     </div>
   </div>
 </template>
@@ -12,7 +23,8 @@
 <script>
 import Header from "./components/Header";
 import ListaFilmes from "./components/ListaFilmes";
-import Detalhes from "./components/Detalhes"
+import Detalhes from "./components/Detalhes";
+import Formulario from "./components/Formulario"
 import { lerFilmes } from "./Servico"
 
 export default {
@@ -20,13 +32,15 @@ export default {
   components: {
     Header,
     ListaFilmes,
-    Detalhes
+    Detalhes,
+    Formulario
   },
   data() {
       return {
           filmes: [],
           filme: {},
-          openDetalhes: false
+          openDetalhes: false,
+          openForm: false
       }
   },
   methods: {
@@ -37,10 +51,20 @@ export default {
       mostrarDetalhes(filme) {
           this.filme = filme
           this.openDetalhes = true
+          this.openForm = false
       },
       fecharDetalhes() {
           this.filme = {}
           this.openDetalhes = false
+      },
+      mostrarForm(filme) {
+          this.filme = filme
+          this.openForm = true
+          this.openDetalhes = false
+      },
+      fecharForm() {
+          this.filme = {}
+          this.openForm = false
       }
   },
   mounted() {

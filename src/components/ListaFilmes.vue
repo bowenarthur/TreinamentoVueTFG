@@ -3,7 +3,11 @@
     <h3>{{ Titulo }}</h3>
     <div class="scrollmenu row dragscroll">
       <div v-for="filme in this.filmes" :key="filme._id">
-        <Filme :Filme="filme" v-on:mostrar-detalhes="mostrarDetalhes" />
+        <Filme 
+            :Filme="filme" 
+            v-on:mostrar-detalhes="mostrarDetalhes" 
+            v-on:mostrar-form="mostrarForm"
+        />
       </div>
     </div>
   </div>
@@ -22,6 +26,9 @@ export default {
   methods: {
       mostrarDetalhes(filme) {
           this.$emit('mostrar-detalhes', filme)
+      },
+      mostrarForm(filme) {
+          this.$emit('mostrar-form', filme)
       }
   }
 };
