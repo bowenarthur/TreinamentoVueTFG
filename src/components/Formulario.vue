@@ -99,7 +99,7 @@ export default {
             "https://frameworks-web.herokuapp.com/api/filmes/" + this.Filme._id,
             data
           )
-          .then((res) => {
+          .then(() => {
             alert("Filme alterado com sucesso!");
             window.location.reload();
           })
@@ -110,7 +110,7 @@ export default {
       } else if (this.Tipo === "Cadastro") {
         axios
           .post("https://frameworks-web.herokuapp.com/api/filmes", data)
-          .then((res) => {
+          .then(() => {
             alert("Filme cadastrado com sucesso!");
             window.location.reload();
           })

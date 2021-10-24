@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import Formulario from "./Formulario";
 import Detalhes from "./Detalhes";
+import { excluirFilme } from '../Servico';
 export default {
   data: () => ({
     open: false,
@@ -57,16 +57,7 @@ export default {
       this.filme = {};
     },
     deleteFilme(id) {
-      axios
-        .delete("https://frameworks-web.herokuapp.com/api/filmes/" + id)
-        .then((res) => {
-          alert("Filme deletado com sucesso");
-          window.location.reload();
-        })
-        .catch((err) => {
-          alert("Ocorreu um erro");
-          console.log(err);
-        });
+      excluirFilme(id);
     },
   },
 };
