@@ -1,7 +1,7 @@
 <template>
-  <div class="Header">
-    <h3 class="TituloSite">LISTA DE FILMES</h3>
-    <ul class="MenuSite">
+  <div class="header">
+    <h3 class="titulo-site">LISTA DE FILMES</h3>
+    <ul class="menu-site">
       <li>
         <a v-on:click.prevent="mostrarForm"> CADASTRAR FILME </a>
       </li>

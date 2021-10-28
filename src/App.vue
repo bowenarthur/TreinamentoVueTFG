@@ -1,5 +1,5 @@
 <template>
-  <div class="App">
+  <div class="app">
     <Header v-on:mostrar-form="mostrarForm" />
     <ListaFilmes 
         titulo="Últimos filmes" 
@@ -8,12 +8,12 @@
         v-on:mostrar-form="mostrarForm" 
     />
 
-    <div class="Modal" v-if="openDetalhes">
+    <div class="modal" v-if="openDetalhes">
         <a class="close" v-on:click.prevent="fecharDetalhes"> &times; </a>
         <Detalhes :filme="filme" />
     </div>
 
-    <div class="Modal" v-if="openForm">
+    <div class="modal" v-if="openForm">
         <a class="close" v-on:click.prevent="fecharForm"> &times; </a>
         <Formulario :filme="filme" />
     </div>

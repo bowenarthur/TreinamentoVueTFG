@@ -1,7 +1,7 @@
 <template>
   <form v-on:submit.prevent="submit">
     <h2>Cadastro de Filme</h2>
-    <div class="Formulario">
+    <div class="formulario">
       <div>
         <label for="nome">Nome: </label>
         <input type="text" name="nome" v-model="nome" required />
@@ -31,7 +31,7 @@
         v-on:atualizar-personagens="atualizarPersonagens" 
       />
     </div>
-    <input type="submit" class="BotaoCadastrar" value="Enviar" />
+    <input type="submit" class="botao-cadastrar" value="Enviar" />
   </form>
 </template>
 
