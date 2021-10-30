@@ -1,7 +1,7 @@
 <template>
-  <form v-on:submit.prevent="this.submit()">
+  <form v-on:submit.prevent="submit">
     <h2>Cadastro de Filme</h2>
-    <div class="Formulario">
+    <div class="formulario">
       <div>
         <label for="nome">Nome: </label>
         <input type="text" name="nome" v-model="nome" required />
@@ -11,15 +11,9 @@
         <br />
         <label for="categoria">Categoria: </label>
         <select name="categoria" v-model="categoria" required>
-          <option disabled value=""></option>
-          <option value="Ação">Ação</option>
-          <option value="Comédia">Comédia</option>
-          <option value="Documentário">Documentário</option>
-          <option value="Drama">Drama</option>
-          <option value="Fantasia">Fantasia</option>
-          <option value="Ficção">Ficção</option>
-          <option value="Romance">Romance</option>
-          <option value="Terror">Terror</option>
+          <option v-for="categoria in categorias" :value="categoria" v-bind:key="categoria">
+            {{categoria}}
+          </option>
         </select>
         <br />
         <label for="sinopse">Sinopse: </label>
@@ -28,49 +22,26 @@
         <label for="ano">Ano: </label>
         <input type="number" name="ano" v-model="ano" required />
         <br />
-        <label for="duracao">Duração(minutos): </label>
+        <label for="duracao">Duração (min): </label>
         <input type="number" name="duracao" v-model="duracao" required />
         <br />
       </div>
-      <div>
-        <h3>Personagens</h3>
-        <br />
-        <label for="nomepersonagem">Nome: </label>
-        <input type="text" name="nomepersonagem" v-model="nomepersonagem" />
-        <br />
-        <label for="personagem">Ator/Atriz: </label>
-        <input type="text" name="ator" v-model="ator" />
-        <button type="button" v-on:click="this.adicionarPersonagem()">
-          Adicionar
-        </button>
-
-        <table class="Tabela">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Ator/Atriz</th>
-            </tr>
-          </thead>
-          <tbody v-for="personagem in personagens" :key="personagem._id">
-            <tr v-on:click="this.removerPersonagem(personagem.nome)">
-              <td>{{ personagem.nome }}</td>
-              <td>{{ personagem.ator }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <EdicaoPersonagens 
+        :personagens="personagens" 
+        v-on:atualizar-personagens="atualizarPersonagens" 
+      />
     </div>
-    <input type="submit" class="BotaoCadastrar" value="Enviar" />
+    <input type="submit" class="botao-cadastrar" value="Enviar" />
   </form>
 </template>
 
 <script>
-import axios from "axios";
+import { inserirFilme, atualizarFilme } from "../Servico"
+import EdicaoPersonagens from "./EdicaoPersonagens";
+
 export default {
   data: () => ({
     personagens: [],
-    nomepersonagem: "",
-    ator: "",
     nome: "",
     foto: "",
     categoria: "",
@@ -79,8 +50,15 @@ export default {
     duracao: "",
   }),
   props: {
-    Tipo: String,
-    Filme: Object,
+    filme: Object
+  },
+  computed: {
+    categorias: () => [
+        "Ação", "Comédia", "Documentário", "Drama", "Fantasia", "Ficção", "Romance", "Terror"
+    ]  
+  },
+  components: {
+    EdicaoPersonagens
   },
   methods: {
     submit() {
@@ -93,75 +71,25 @@ export default {
         duracao: this.duracao,
         personagens: this.personagens,
       };
-      if (this.Tipo === "Alterar") {
-        axios
-          .put(
-            "https://frameworks-web.herokuapp.com/api/filmes/" + this.Filme._id,
-            data
-          )
-          .then((res) => {
-            alert("Filme alterado com sucesso!");
-            window.location.reload();
-          })
-          .catch((err) => {
-            alert("Ocorreu um erro");
-            console.log(err);
-          });
-      } else if (this.Tipo === "Cadastro") {
-        axios
-          .post("https://frameworks-web.herokuapp.com/api/filmes", data)
-          .then((res) => {
-            alert("Filme cadastrado com sucesso!");
-            window.location.reload();
-          })
-          .catch((err) => {
-            alert("Ocorreu um erro");
-            console.log(err);
-          });
-      } else console.log("Tipo incorreto");
+      this.filme._id ?
+        atualizarFilme(this.filme._id, data) :
+        inserirFilme(data);
     },
-    adicionarPersonagem() {
-      let aux = this.personagens;
-      if (aux) {
-        aux[aux.length] = {
-          nome: this.nomepersonagem,
-          ator: this.ator,
-        };
-      } else {
-        aux = [
-          {
-            nome: this.nomepersonagem,
-            ator: this.ator,
-          },
-        ];
-      }
-      this.personagens = aux;
-      this.nomepersonagem = "";
-      this.ator = "";
-    },
-    removerPersonagem(nome) {
-      let aux = this.personagens;
-      let indice;
-      aux.map(function (p, index) {
-        if (p.nome === nome) {
-          indice = index;
-        }
-      });
-      aux.splice(indice, 1);
-      this.personagens = aux;
-      this.nomepersonagem = "";
-      this.ator = "";
-    },
+    atualizarPersonagens(personagens) {
+        this.personagens = personagens
+    }
   },
   mounted() {
-    if (this.Filme) {
-      this.nome = this.Filme.nome;
-      this.foto = this.Filme.foto;
-      this.categoria = this.Filme.categoria;
-      this.sinopse = this.Filme.sinopse;
-      this.ano = this.Filme.ano;
-      this.duracao = this.Filme.duracao;
-      this.personagens = this.Filme.personagens;
+    if (this.filme._id) {
+      this.nome = this.filme.nome;
+      this.foto = this.filme.foto;
+      this.categoria = this.filme.categoria;
+      this.sinopse = this.filme.sinopse;
+      this.ano = this.filme.ano;
+      this.duracao = this.filme.duracao;
+      this.personagens = this.filme.personagens;
+    } else {
+      this.categoria = this.categorias[0]  
     }
   },
 };
