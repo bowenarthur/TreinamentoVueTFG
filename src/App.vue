@@ -7,6 +7,13 @@
         v-on:mostrar-detalhes="mostrarDetalhes"
         v-on:mostrar-form="mostrarForm" 
     />
+    
+    <ListaFilmes 
+        titulo="Ação" 
+        :filmes="acao" 
+        v-on:mostrar-detalhes="mostrarDetalhes"
+        v-on:mostrar-form="mostrarForm" 
+    />
 
     <div class="modal" v-if="openDetalhes">
         <a class="close" v-on:click.prevent="fecharDetalhes"> &times; </a>
@@ -39,14 +46,15 @@ export default {
       return {
           filmes: [],
           filme: {},
+          acao: [],
           openDetalhes: false,
           openForm: false
       }
   },
   methods: {
       fetchData() {
-          lerFilmes()
-            .then(res => this.filmes = res.data)
+          lerFilmes().then(res => this.filmes = res.data)
+          lerFilmes("Ação").then(res => this.acao = res.data)
       },
       mostrarDetalhes(filme) {
           this.filme = filme
