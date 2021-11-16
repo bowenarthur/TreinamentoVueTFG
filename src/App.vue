@@ -2,7 +2,7 @@
   <div class="app">
     <Header v-on:mostrar-form="mostrarForm" />
     <ListaFilmes 
-        titulo="Últimos filmes" 
+        titulo="Últimos Filmes" 
         :filmes="filmes" 
         v-on:mostrar-detalhes="mostrarDetalhes"
         v-on:mostrar-form="mostrarForm" 
